@@ -20,7 +20,7 @@ import java.util.List;
 public class Main {
 
     public static void main(@Nonnull String[] args) {
-        final File projectDirectory = new File(System.getProperty("user.dir"));
+        final File projectDirectory = new File("/github/workspace/");
 
         final JavaIndexService javaIndexService = new JavaIndexService();
         final List<ProjectModule> projectModules = javaIndexService.index(projectDirectory, null);
