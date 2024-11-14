@@ -1,0 +1,5 @@
+name: 'CBOM Scan Action'
+description: 'Generate CBOM from source code'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
