@@ -5,6 +5,7 @@ import com.ibm.usecases.indexing.ProjectModule;
 import com.ibm.usecases.indexing.JavaIndexService;
 import com.ibm.usecases.scanning.JavaScannerService;
 import jakarta.annotation.Nonnull;
+import org.apache.commons.io.FileUtils;
 import org.cyclonedx.Version;
 import org.cyclonedx.exception.GeneratorException;
 import org.cyclonedx.generators.BomGeneratorFactory;
@@ -12,6 +13,8 @@ import org.cyclonedx.generators.json.BomJsonGenerator;
 import org.cyclonedx.model.Bom;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class Main {
@@ -29,9 +32,9 @@ public class Main {
         try {
             final String bomString = bomGenerator.toJsonString();
             System.out.println(bomString);
-        } catch (GeneratorException e) {
+            FileUtils.write(new File("/github/workspace/cbom.json"), bomString, StandardCharsets.UTF_8, false);
+        } catch (GeneratorException | IOException e) {
             System.out.println("Could not generate CBOM:" + e.getMessage());
         }
-
     }
 }
