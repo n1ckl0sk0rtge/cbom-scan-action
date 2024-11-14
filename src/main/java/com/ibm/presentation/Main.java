@@ -13,14 +13,16 @@ import org.cyclonedx.generators.json.BomJsonGenerator;
 import org.cyclonedx.model.Bom;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@SuppressWarnings("java:S106")
 public class Main {
 
     public static void main(@Nonnull String[] args) {
-        final File projectDirectory = new File("/github/workspace/");
+        final String workspace = "/github/workspace/";
+        final File projectDirectory = new File(workspace);
 
         final JavaIndexService javaIndexService = new JavaIndexService();
         final List<ProjectModule> projectModules = javaIndexService.index(projectDirectory, null);
@@ -29,12 +31,14 @@ public class Main {
         final Bom bom = javaScannerService.scan(null, projectModules);
 
         final BomJsonGenerator bomGenerator = BomGeneratorFactory.createJson(Version.VERSION_16, bom);
-        try {
+        final String githubOutput = System.getenv("GITHUB_OUTPUT");
+        try (FileWriter writer = new FileWriter(githubOutput, true)){
             final String bomString = bomGenerator.toJsonString();
             System.out.println(bomString);
-            FileUtils.write(new File("/github/workspace/cbom.json"), bomString, StandardCharsets.UTF_8, false);
+            // write
+            writer.write("cbom=" + bomString + "\n");
         } catch (GeneratorException | IOException e) {
-            System.out.println("Could not generate CBOM:" + e.getMessage());
+            System.out.println("Error:" + e.getMessage());
         }
     }
 }
