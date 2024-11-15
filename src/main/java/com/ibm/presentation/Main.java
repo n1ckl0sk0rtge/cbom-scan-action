@@ -5,6 +5,7 @@ import com.ibm.usecases.indexing.ProjectModule;
 import com.ibm.usecases.indexing.JavaIndexService;
 import com.ibm.usecases.scanning.JavaScannerService;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
 import org.cyclonedx.Version;
 import org.cyclonedx.exception.GeneratorException;
@@ -31,14 +32,22 @@ public class Main {
         final Bom bom = javaScannerService.scan(null, projectModules);
 
         final BomJsonGenerator bomGenerator = BomGeneratorFactory.createJson(Version.VERSION_16, bom);
+        @Nullable String bomString = null;
+        try {
+            bomString = bomGenerator.toJsonString();
+            System.out.println(bomString);
+        } catch (GeneratorException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        if (bomString == null) {
+            return;
+        }
         final String githubOutput = System.getenv("GITHUB_OUTPUT");
         try (FileWriter writer = new FileWriter(githubOutput, true)){
-            final String bomString = bomGenerator.toJsonString();
-            System.out.println(bomString);
-            // write
             writer.write("cbom=" + bomString + "\n");
-        } catch (GeneratorException | IOException e) {
-            System.out.println("Error:" + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
