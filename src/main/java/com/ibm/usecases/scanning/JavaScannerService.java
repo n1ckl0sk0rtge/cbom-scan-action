@@ -29,6 +29,7 @@ public class JavaScannerService extends ScannerService {
         super(projectDirectory, cbomOutputFile);
     }
 
+    @Nonnull
     public synchronized Bom scan(@Nullable String subFolder,
                                  @Nonnull List<ProjectModule> index) {
         final List<JavaCheck> visitors = List.of(new JavaDetectionCollectionRule(this));
