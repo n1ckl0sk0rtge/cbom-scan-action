@@ -34,7 +34,7 @@ public class Main {
     private static final String ACTION_ORG = "";
 
     public static void main(@Nonnull String[] args) {
-        final String workspace = "/github/workspace/";
+        final String workspace = System.getenv("GITHUB_WORKSPACE");
         final File projectDirectory = new File(workspace);
 
         // java
@@ -97,20 +97,11 @@ public class Main {
             return;
         }
 
-        // final String githubOutput = System.getenv("GITHUB_OUTPUT");
-
-        final String currentPath = System.getProperty("user.dir");
-        final File file = new File(currentPath, "cbom.json");
-
-        try {
-            if (file.createNewFile()) {
-                try (FileWriter writer = new FileWriter(file)) {
-                    writer.write(bomString);
-                    System.out.println("CBOM availabe at " + file.getAbsolutePath());
-                }
-            }
+        final String githubOutput = System.getenv("GITHUB_OUTPUT");
+        try (FileWriter writer = new FileWriter(githubOutput, true)) {
+            writer.write("cbom=" + bomString + "\n");
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: Could not write CBOM to output. " + e.getMessage());
             System.exit(1);
         }
     }
