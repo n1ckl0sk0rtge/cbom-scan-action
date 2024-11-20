@@ -99,7 +99,7 @@ public class Main {
 
         final String githubOutput = System.getenv("GITHUB_OUTPUT");
         try (FileWriter writer = new FileWriter(githubOutput, true)) {
-            writer.write("cbom='" + bomString + "'\n");
+            writer.write("cbom=" + bomString + "\n");
         } catch (IOException e) {
             System.out.println("Error: Could not write CBOM to output. " + e.getMessage());
             System.exit(1);
