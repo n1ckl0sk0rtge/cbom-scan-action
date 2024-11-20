@@ -23,7 +23,6 @@ import com.ibm.engine.detection.Finding;
 import com.ibm.mapper.model.INode;
 import com.ibm.plugin.rules.PythonInventoryRule;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NotNull;
 import org.sonar.plugins.python.api.PythonCheck;
 import org.sonar.plugins.python.api.PythonVisitorContext;
 import org.sonar.plugins.python.api.symbols.Symbol;
@@ -40,7 +39,7 @@ public class PythonDetectionCollectionRule extends PythonInventoryRule {
     }
 
     @Override
-    public void update(@NotNull Finding<PythonCheck, Tree, Symbol, PythonVisitorContext> finding) {
+    public void update(@Nonnull Finding<PythonCheck, Tree, Symbol, PythonVisitorContext> finding) {
         super.update(finding);
         final List<INode> nodes = pythonTranslationProcess.initiate(finding.detectionStore());
         handler.accept(nodes);

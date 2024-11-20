@@ -23,7 +23,6 @@ import com.ibm.engine.detection.Finding;
 import com.ibm.mapper.model.INode;
 import com.ibm.plugin.rules.JavaInventoryRule;
 import jakarta.annotation.Nonnull;
-import org.jetbrains.annotations.NotNull;
 import org.sonar.plugins.java.api.JavaCheck;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.semantic.Symbol;
@@ -40,7 +39,7 @@ public class JavaDetectionCollectionRule extends JavaInventoryRule {
     }
 
     @Override
-    public void update(@NotNull Finding<JavaCheck, Tree, Symbol, JavaFileScannerContext> finding) {
+    public void update(@Nonnull Finding<JavaCheck, Tree, Symbol, JavaFileScannerContext> finding) {
         super.update(finding);
         final List<INode> nodes = javaTranslationProcess.initiate(finding.detectionStore());
         handler.accept(nodes);
