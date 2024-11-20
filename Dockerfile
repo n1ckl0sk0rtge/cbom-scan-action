@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/openjdk-21:1.20
+FROM openjdk:21
 
 COPY --chown=0:0 cbom-scan-action.jar /cbom-scan-action.jar
 
