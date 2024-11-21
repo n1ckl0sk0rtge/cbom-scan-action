@@ -1,4 +1,4 @@
-# cbom-scan-action
+# cbomkit-action
 
 GitHub Action to generate CBOM.
 
