@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create CBOM
-        uses: n1ckl0sk0rtge/cbom-scan-action@v0.0.18
+        uses: n1ckl0sk0rtge/cbomkit-action@v0.0.18
         id: cbom
       # Allow you to persist CBOM after a job has completed, and share 
       # that CBOM with another job in the same workflow.
