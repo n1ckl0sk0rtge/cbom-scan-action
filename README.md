@@ -19,7 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create CBOM
-        id: scan
         uses: n1ckl0sk0rtge/cbom-scan-action@v0.0.16
       - name: Commit changes to new branch
         run: |
