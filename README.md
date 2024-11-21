@@ -10,7 +10,7 @@ on:
 
 jobs:
   cbom-scan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: CBOM generation
     permissions:
       contents: write
