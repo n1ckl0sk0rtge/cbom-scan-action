@@ -97,9 +97,14 @@ public class Main {
             return;
         }
 
+        final String fileName = "cbom.json";
         final String githubOutput = System.getenv("GITHUB_OUTPUT");
-        try (FileWriter writer = new FileWriter(githubOutput, true)) {
-            writer.write("cbom=" + bomString + "\n");
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write(bomString);
+            // set output var
+            final FileWriter outPutVarFileWriter = new FileWriter(githubOutput, true);
+            outPutVarFileWriter.write("cbom=" + fileName);
+            outPutVarFileWriter.close();
         } catch (IOException e) {
             System.out.println("Error: Could not write CBOM to output. " + e.getMessage());
             System.exit(1);
