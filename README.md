@@ -19,7 +19,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create CBOM
-        uses: n1ckl0sk0rtge/cbom-scan-action@v0.0.16
+        uses: n1ckl0sk0rtge/cbom-scan-action@v0.0.18
+        id: cbom
+      # Allow you to persist CBOM after a job has completed, and share 
+      # that CBOM with another job in the same workflow.
+      - name: Create and publish CBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "CBOM"
+          path: ${{ steps.cbom.outputs.filename }}
+      # Create a PR to merge the created CBOM
       - name: Commit changes to new branch
         run: |
           git config user.name github-actions
