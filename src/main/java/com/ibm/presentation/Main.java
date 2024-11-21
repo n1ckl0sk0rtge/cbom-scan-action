@@ -103,7 +103,7 @@ public class Main {
             writer.write(bomString);
             // set output var
             final FileWriter outPutVarFileWriter = new FileWriter(githubOutput, true);
-            outPutVarFileWriter.write("cbom=" + fileName);
+            outPutVarFileWriter.write("filename=" + fileName);
             outPutVarFileWriter.close();
         } catch (IOException e) {
             System.out.println("Error: Could not write CBOM to output. " + e.getMessage());
